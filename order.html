@@ -1,0 +1,55 @@
+
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>الطلبات</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module">
+    import {renderCart, whatsappCheckout, removeFromCart, updateCartCount} from './app.js';
+    window.removeFromCart = removeFromCart;
+    window.whatsappCheckout = whatsappCheckout;
+    document.addEventListener('DOMContentLoaded', ()=>{
+      updateCartCount();
+      renderCart();
+    });
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <img src="assets/logo.jpg" alt="شعار المتجر">
+      <strong>متجرك</strong>
+      <div class="links">
+        <a href="index.html">الرئيسية</a>
+        <a href="catalog.html">الكاتالوج</a>
+        <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <div class="card" style="padding:16px">
+      <h2>سلة المشتريات</h2>
+      <table class="table">
+        <thead>
+          <tr><th>المنتج</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th><th></th></tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+        <tfoot>
+          <tr><td colspan="3" style="text-align:left">المجموع:</td><td id="cart-total">0 ₪</td><td></td></tr>
+        </tfoot>
+      </table>
+      <div style="display:flex; gap:10px; margin-top:12px">
+        <button onclick="localStorage.clear(); location.reload()">تفريغ السلة</button>
+        <button onclick="whatsappCheckout()">إتمام عبر واتساب</button>
+      </div>
+      <p class="small">ملاحظة: السلة محفوظة محليًا على جهاز الزبون فقط.</p>
+    </div>
+  </main>
+
+  <footer>© <span id="y"></span> متجرك</footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+</body>
+</html>
