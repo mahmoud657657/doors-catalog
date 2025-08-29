@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تفاصيل المنتج</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module">
+    import {fetchProducts, addToCart, updateCartCount} from './app.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      updateCartCount();
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get("id"));
+      const products = await fetchProducts();
+      const p = products.find(x => x.id === id);
+
+      if (!p) {
+        document.getElementById('content').innerHTML = "<p>المنتج غير موجود.</p>";
+        return;
+      }
+
+      document.getElementById('content').innerHTML = `
+        <div class="card" style="padding:16px; max-width:700px; margin:auto">
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:auto; border-radius:12px; margin-bottom:16px">
+          <h2>${p.name}</h2>
+          <p class="small">${p.desc}</p>
+          <div class="price" style="margin:12px 0">${p.price} ₪</div>
+          <button onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة</button>
+        </div>
+      `;
+    });
+  </script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <a href="index.html"><strong>متجرك</strong></a>
+      <div class="links">
+        <a href="index.html">الرئيسية</a>
+        <a href="catalog.html">الكاتالوج</a>
+        <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container" id="content"></main>
+
+  <footer>© <span id="y"></span> متجرك</footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+</body>
+</html>
