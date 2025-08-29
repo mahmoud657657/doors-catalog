@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>الكاتالوج</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./styles.css">
   <script type="module">
     import {fetchProducts, addToCart, updateCartCount} from './app.js';
     window.addToCart = addToCart; // expose globally
@@ -19,7 +19,7 @@
       function render(list){
         grid.innerHTML = list.map(p => `
           <div class="card product">
-            <a href="product.html?id=${p.id}">
+            <a href="./product.html?id=${p.id}">
               <img src="${p.image}" alt="${p.name}">
             </a>
             <div class="body">
@@ -54,7 +54,6 @@
       q.addEventListener('input', filter);
       tag.addEventListener('change', filter);
 
-      // fill tag options
       const tags = [...new Set(products.flatMap(p => p.tags || []))];
       tag.innerHTML = "<option value=''>كل التصنيفات</option>" + tags.map(t=>`<option>${t}</option>`).join('');
     });
@@ -63,12 +62,12 @@
 <body>
   <nav class="nav">
     <div class="inner">
-      <img src="assets/logo.jpg" alt="شعار المتجر">
+      <img src="./assets/logo.jpg" alt="شعار المتجر">
       <strong>متجرك</strong>
       <div class="links">
-        <a href="index.html">الرئيسية</a>
-        <a href="catalog.html">الكاتالوج</a>
-        <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+        <a href="./index.html">الرئيسية</a>
+        <a href="./catalog.html">الكاتالوج</a>
+        <a href="./order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
       </div>
     </div>
   </nav>
@@ -77,7 +76,7 @@
     <div class="searchbar card">
       <input id="q" placeholder="ابحث باسم المنتج أو الوصف">
       <select id="tag"></select>
-      <a href="order.html"><button>السلة / الإتمام</button></a>
+      <a href="./order.html"><button>السلة / الإتمام</button></a>
     </div>
 
     <div class="grid" id="grid" style="margin-top:16px"></div>
