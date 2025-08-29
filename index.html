@@ -1,50 +1,99 @@
-
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>الصفحة الرئيسية</title>
+  <title>SteelCraft — الصفحة الرئيسية</title>
   <link rel="stylesheet" href="styles.css">
   <script type="module">
     import {updateCartCount} from './app.js';
     window.addEventListener('load', updateCartCount);
   </script>
+  <style>
+    .hero {
+      background: url('assets/hero-bg.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .services, .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+    .services .card, .features .card {
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <!-- الهيدر -->
   <nav class="nav">
     <div class="inner">
-      <img src="assets/logo.jpg" alt="شعار المتجر">
-      <strong>متجرك</strong>
+      <img src="assets/logo.jpg" alt="SteelCraft logo" style="height:40px">
+      <strong>SteelCraft</strong>
       <div class="links">
         <a href="index.html">الرئيسية</a>
         <a href="catalog.html">الكاتالوج</a>
         <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+        <a href="contact.html">تواصل</a>
       </div>
     </div>
   </nav>
 
+  <!-- Hero -->
   <section class="hero">
-    <div class="container">
-      <h1>أهلاً في متجرك 👋</h1>
-      <p>موقع بسيط، أنيق، وجاهز للنشر على GitHub Pages أو أي استضافة ثابتة.</p>
-    </div>
+    <h1>SteelCraft</h1>
+    <p>أعمال حديد احترافية: أبواب – بوابات – شبابيك – درابزينات – شبك حماية</p>
+    <a href="catalog.html"><button>شوف الكتالوج</button></a>
   </section>
 
+  <!-- خدماتنا -->
   <main class="container">
-    <div class="card" style="padding:16px">
-      <h2>ماذا يتضمن هذا القالب؟</h2>
-      <ul>
-        <li>كاتالوج منتجات مع بحث فوري.</li>
-        <li>سلة مشتريات محلية (localStorage).</li>
-        <li>إتمام الطلب عبر واتساب بنقرة واحدة.</li>
-        <li>تصميم عربي RTL أنيق وخفيف.</li>
-      </ul>
-      <p class="small">لتعديل الشعار أو الألوان غيّر ملف <code>styles.css</code> والصور داخل <code>assets/</code>.</p>
+    <h2>خدماتنا</h2>
+    <div class="services">
+      <div class="card">أبواب حديد مودرن وكلاسيك</div>
+      <div class="card">بوابات سحاب ومفصلية</div>
+      <div class="card">شبابيك وشبك حماية</div>
+      <div class="card">درابزينات سلالم وبلكونات</div>
+    </div>
+
+    <!-- عينات منتجات -->
+    <h2 style="margin-top:40px">أبرز المنتجات</h2>
+    <div id="sample-products" class="grid"></div>
+
+    <!-- ليش تختارنا -->
+    <h2 style="margin-top:40px">ليش تختار SteelCraft؟</h2>
+    <div class="features">
+      <div class="card">جودة عالية وخامات متينة</div>
+      <div class="card">تفصيل حسب الطلب</div>
+      <div class="card">ضمان على التصنيع</div>
+      <div class="card">سرعة في الإنجاز والتوصيل</div>
     </div>
   </main>
 
-  <footer>© <span id="y"></span> متجرك</footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+  <!-- Footer -->
+  <footer>© <span id="y"></span> SteelCraft | <a href="contact.html">تواصل معنا</a></footer>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // تحميل عينات منتجات
+    import('./app.js').then(m => {
+      m.fetchProducts().then(products => {
+        const grid = document.getElementById('sample-products');
+        grid.innerHTML = products.slice(0,3).map(p=>`
+          <div class="card product">
+            <a href="product.html?id=${p.id}">
+              <img src="${p.image}" alt="${p.name}">
+              <h3>${p.name}</h3>
+              <div>${p.price} ₪</div>
+            </a>
+          </div>
+        `).join('');
+      });
+    });
+  </script>
 </body>
 </html>
